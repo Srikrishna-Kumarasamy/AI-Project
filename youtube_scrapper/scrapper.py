@@ -6,6 +6,7 @@ class YoutubeScrapper():
 
     def __init__(self):
         self.SOURCE = "Youtube"
+
     def get_video_id(self):
         return self.youtube_url.split("v=")[1].split("&")[0]
     

@@ -1,4 +1,6 @@
 import requests
+from database import MongoDB
+from dataclasses import asdict
 from data_modules.content import Content
 from youtube_transcript_api import YouTubeTranscriptApi
 
@@ -6,6 +8,7 @@ class YoutubeScrapper():
 
     def __init__(self):
         self.SOURCE = "Youtube"
+        self.mongo_db = MongoDB()
 
     def get_video_id(self):
         return self.youtube_url.split("v=")[1].split("&")[0]
@@ -20,6 +23,9 @@ class YoutubeScrapper():
     def get_transcript(self):
         transcript = YouTubeTranscriptApi.get_transcript(self.video_id)
         return " ".join([entry['text'] for entry in transcript])
+    
+    def store_in_mongo_db(self, document):
+        self.mongo_db.insert(document)
 
     def scrape(self, youtube_url):
         self.youtube_url = youtube_url
@@ -30,5 +36,5 @@ class YoutubeScrapper():
             url = self.youtube_url,
             description = self.get_transcript()
         )
+        self.store_in_mongo_db(asdict(self.content))
         return self.content
-

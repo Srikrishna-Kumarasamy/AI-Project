@@ -1,0 +1,16 @@
+from pymongo import MongoClient
+
+class MongoDB:
+    
+    def __init__(self):
+        self.client = client = MongoClient('localhost', 27017)
+        self.db = client.mydatabase
+        self.collection = self.db['raw_data']
+    
+    def insert(self, doc):
+        result = self.collection.insert_one(doc)
+        return result
+    
+    def delete(self, field, value):
+        result = self.collection.delete_one({field: value})
+        return result

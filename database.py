@@ -4,7 +4,7 @@ class MongoDB:
     
     def __init__(self):
         self.client = client = MongoClient('localhost', 27017)
-        self.db = client.mydatabase
+        self.db = client.rag_project
         self.collection = self.db['raw_data']
     
     def insert(self, doc):

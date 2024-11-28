@@ -1,7 +1,7 @@
 import asyncio
 from ollama import AsyncClient
 
-class Llama():
+class Llama:
 
     def __init__(self):
         self.model = "llama3.1:8b"

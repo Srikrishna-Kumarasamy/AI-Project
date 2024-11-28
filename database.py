@@ -14,3 +14,8 @@ class MongoDB:
     def delete(self, field, value):
         result = self.collection.delete_one({field: value})
         return result
+    
+    def get_all_docs(self):
+        documents = self.collection.find()
+        return documents
+

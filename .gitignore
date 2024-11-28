@@ -1,2 +1,5 @@
+.DS_Store
 py3-env
 __pycache__
+qdrant_storage
+test_run

@@ -1,10 +1,11 @@
+import uuid
 import requests
 from database import MongoDB
 from dataclasses import asdict
 from data_modules.content import Content
 from youtube_transcript_api import YouTubeTranscriptApi
 
-class YoutubeScrapper():
+class YoutubeScrapper:
 
     def __init__(self):
         self.SOURCE = "Youtube"
@@ -31,6 +32,7 @@ class YoutubeScrapper():
         self.youtube_url = youtube_url
         self.video_id = self.get_video_id()
         self.content = Content(
+            _id = str(uuid.uuid4()),
             title = self.get_video_title(),
             source = self.SOURCE,
             url = self.youtube_url,

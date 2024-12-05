@@ -1,9 +1,10 @@
 import uuid
 import requests
-from database import MongoDB
 from dataclasses import asdict
+from store_in_mongo_db import MongoDB
 from data_modules.content import Content
 from youtube_transcript_api import YouTubeTranscriptApi
+
 
 class YoutubeScrapper:
 
@@ -28,7 +29,7 @@ class YoutubeScrapper:
     def store_in_mongo_db(self, document):
         self.mongo_db.insert(document)
 
-    def scrape(self, youtube_url):
+    def scrape_and_store(self, youtube_url):
         self.youtube_url = youtube_url
         self.video_id = self.get_video_id()
         self.content = Content(

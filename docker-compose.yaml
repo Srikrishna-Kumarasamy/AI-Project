@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    ports:
+      - "5001:5001"
+    environment:
+      - HUGGINGFACE_HUB_API=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
+    depends_on:
+      - mongodb
+      - qdrant
+      - ollama
+    volumes:
+      - .:/usr/src/app
+    command: >
+      bash -c "zenml login bfdd0a7c-3926-4552-b5f4-a926e10beeaa && python /usr/src/app/app.py"
+
+  mongodb:
+    image: mongo:8.0.1
+    container_name: mongodb_con
+    ports:
+      - "27018:27018"
+    volumes:
+      - mongodb_data:/data/db
+
+  qdrant:
+    image: qdrant/qdrant:v1.12.4
+    container_name: qdrant_con
+    ports:
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama_con
+    ports:
+      - "11435:11435"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - GPU_ENABLED=true
+
+volumes:
+  mongodb_data:
+  qdrant_data:
+  ollama_data:

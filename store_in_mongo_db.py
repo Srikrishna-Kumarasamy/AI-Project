@@ -19,3 +19,8 @@ class MongoDB:
         documents = self.collection.find()
         return documents
 
+    def get_all_doc_of_a_source(self, source):
+        # documents = self.collection.find()
+        documents = self.collection.find({'source': source})
+        return documents
+

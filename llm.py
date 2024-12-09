@@ -7,12 +7,8 @@ class Llama:
 
     async def query(self, prompt):
         message = {'role' : 'user', 'content': prompt}
-        response = ""
         async for part in await ollama.AsyncClient().chat(model=self.model, messages=[message], stream=True):
-            print(part['message']['content'], end='', flush=True)
-            response += part['message']['content']
-        print()
-        return response
+            yield part['message']['content']
 
     def get_response(self, prompt):
         response = ollama.chat(

@@ -25,11 +25,8 @@ class YoutubeScrapper:
     def get_transcript(self):
         transcript = YouTubeTranscriptApi.get_transcript(self.video_id)
         return " ".join([entry['text'] for entry in transcript])
-    
-    def store_in_mongo_db(self, document):
-        self.mongo_db.insert(document)
 
-    def scrape_and_store(self, youtube_url):
+    def scrape(self, youtube_url):
         self.youtube_url = youtube_url
         self.video_id = self.get_video_id()
         self.content = Content(
@@ -39,5 +36,5 @@ class YoutubeScrapper:
             url = self.youtube_url,
             description = self.get_transcript()
         )
-        self.store_in_mongo_db(asdict(self.content))
-        return self.content
+        # self.store_in_mongo_db(asdict(self.content))
+        return asdict(self.content)
